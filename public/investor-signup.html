@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Investor Sign Up — AgriVerse</title>
+  <link rel="stylesheet" href="css/investor-signup.css" />
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar" id="mainNav" aria-label="Main navigation">
+    <div class="navbar-container">
+      <a class="navbar-brand" href="/index.html">
+        <img src="/WhatsApp Image 2025-11-07 at 01.54.15.jpeg" alt="AgriVerse" class="logo-img" onerror="this.style.display='none'">
+        <span class="brand-text"></span>
+      </a>
+
+      <ul class="navbar-nav" id="navList">
+        <li><a href="/index.html" class="nav-link">About</a></li>
+        <li><a href="/index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="/index.html#perspectives" class="nav-link">Perspectives</a></li>
+        <li><a href="/index.html#contact" class="nav-link">Contact</a></li>
+        <li><a href="/login-page.html" class="nav-btn">Login / Sign Up</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="container" role="main" aria-labelledby="signupTitle">
+      <div class="container-inner">
+        <h2 id="signupTitle">Investor Registration – AgriVerse</h2>
+
+        <!-- NOTE: enctype added for file uploads -->
+        <form id="investorSignupForm" enctype="multipart/form-data" novalidate>
+
+          <h3>Basic Details</h3>
+
+          <label>Full Name *</label>
+          <input type="text" id="name" required />
+
+          <label>Email *</label>
+          <div class="row">
+            <input type="email" id="email" required />
+            <button type="button" id="sendOtpBtn">Send OTP</button>
+          </div>
+
+          <!-- OTP -->
+          <div id="otpSection" class="otp-box" aria-hidden="true">
+            <label>Enter OTP *</label>
+            <div class="row">
+              <input type="text" id="email_otp" maxlength="6" />
+              <button type="button" id="verifyOtpBtn">Verify OTP</button>
+            </div>
+            <small id="otpMsg"></small>
+
+            <div id="resendArea" class="resend" style="display:none;">
+              <button type="button" id="resendOtpBtn" disabled>Resend OTP (30s)</button>
+            </div>
+          </div>
+
+          <label>Phone *</label>
+          <input type="text" id="phone" required placeholder="10-digit mobile" />
+
+          <label>Password *</label>
+          <input type="password" id="password" required />
+
+          <label>Confirm Password *</label>
+          <input type="password" id="confirm_password" required />
+
+          <h3>Agri Focus (select one or more)</h3>
+          <div class="chips">
+            <label><input type="checkbox" class="focus" value="crop" /> Crop</label>
+            <label><input type="checkbox" class="focus" value="dairy" /> Dairy</label>
+            <label><input type="checkbox" class="focus" value="poultry" /> Poultry</label>
+            <label><input type="checkbox" class="focus" value="fishery" /> Fishery</label>
+            <label><input type="checkbox" class="focus" value="mixed" /> Mixed</label>
+          </div>
+
+          <h3>Professional (Optional)</h3>
+          <label>Organization</label>
+          <input type="text" id="org_name" />
+          <label>Designation/Title</label>
+          <input type="text" id="designation" />
+
+          <h3>Location (Optional)</h3>
+          <div class="grid3">
+            <div>
+              <label>Country</label>
+              <input type="text" id="country" value="India" />
+            </div>
+            <div>
+              <label>State</label>
+              <input type="text" id="state" />
+            </div>
+            <div>
+              <label>City</label>
+              <input type="text" id="city" />
+            </div>
+          </div>
+
+          <label>Address</label>
+          <textarea id="address" rows="3"></textarea>
+
+          <h3>KYC – Required</h3>
+          <label>Proof of Citizenship (Aadhaar/PAN/Passport) *</label>
+          <input type="file" id="citizen_proof" accept="image/*,application/pdf" required />
+
+          <label>Bank Proof (Cancelled Cheque / Passbook / Bank Letter) *</label>
+          <input type="file" id="bank_proof" accept="image/*,application/pdf" required />
+
+          <h4>Bank Details (Required)</h4>
+          <div class="grid2">
+            <div>
+              <label>Account Holder Name *</label>
+              <input type="text" id="account_holder" required />
+            </div>
+            <div>
+              <label>Account Number *</label>
+              <input type="text" id="bank_account" required />
+            </div>
+          </div>
+          <div class="grid2">
+            <div>
+              <label>IFSC *</label>
+              <input type="text" id="bank_ifsc" required />
+            </div>
+            <div>
+              <label>PAN (Recommended)*</label>
+              <input type="text" id="pan" placeholder="e.g., ABCDE1234F" required />
+            </div>
+          </div>
+
+          <div style="display:flex; gap:12px; align-items:center; margin-top:12px;">
+            <button type="submit" id="submitBtn" class="disabled" disabled>Create Investor Account</button>
+            <div id="msg" style="color:#d00; font-weight:600;"></div>
+          </div>
+
+          <p style="margin-top:18px; color:#666; font-size:13px;">By creating an account you agree to our Terms & Privacy.</p>
+
+          <!-- spacer so the page can scroll for testing -->
+          <div style="height:100px"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT fixed image aligned to the centered page wrapper -->
+  <div class="right-hero" aria-hidden="true">
+    <img src="WhatsApp Image 2025-11-07 at 21.35.30.jpeg" alt="AgriVerse promotion illustration">
+  </div>
+
+  <!-- JS -->
+  <script src="js/investor-signup.js"></script>
+
+  <script>
+    // Navbar shrink on scroll (same as other pages)
+    window.addEventListener('scroll', function(){
+      const nav = document.getElementById('mainNav');
+      if(window.scrollY > 30) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const send = document.getElementById('sendOtpBtn');
+  const verify = document.getElementById('verifyOtpBtn');
+  const otpSection = document.getElementById('otpSection');
+  const resendArea = document.getElementById('resendArea');
+  const submitBtn = document.getElementById('submitBtn');
+  const otpMsg = document.getElementById('otpMsg');
+  const emailInput = document.getElementById('email');
+
+  let fakeOtp = null, timer = null;
+
+  function startCountdown(sec) {
+    let c = sec;
+    resendArea.style.display = 'block';
+    const btn = document.getElementById('resendOtpBtn');
+    btn.disabled = true;
+    btn.textContent = `Resend OTP (${c}s)`;
+    clearInterval(timer);
+    timer = setInterval(()=> {
+      c--;
+      if (c <= 0) {
+        clearInterval(timer);
+        btn.disabled = false;
+        btn.textContent = 'Resend OTP';
+      } else {
+        btn.textContent = `Resend OTP (${c}s)`;
+      }
+    }, 1000);
+  }
+
+  if (send) {
+    send.addEventListener('click', function() {
+      const email = emailInput.value.trim();
+      if (!email) { alert('Please enter your email first'); return; }
+      otpSection.style.display = 'block';
+      otpSection.setAttribute('aria-hidden','false');
+      fakeOtp = String(Math.floor(100000 + Math.random()*900000));
+      otpMsg.textContent = `Demo OTP: ${fakeOtp}`;
+      startCountdown(30);
+    });
+  }
+
+  if (verify) {
+    verify.addEventListener('click', function() {
+      const entered = document.getElementById('email_otp').value.trim();
+      if (entered === fakeOtp) {
+        otpMsg.textContent = 'Email verified ✓';
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('disabled');
+      } else {
+        otpMsg.textContent = 'Incorrect OTP';
+      }
+    });
+  }
+
+  const resend = document.getElementById('resendOtpBtn');
+  if (resend) {
+    resend.addEventListener('click', function() {
+      fakeOtp = String(Math.floor(100000 + Math.random()*900000));
+      otpMsg.textContent = `Resent OTP: ${fakeOtp}`;
+      startCountdown(30);
+    });
+  }
+
+  // Basic form submit handling and simple validation demo
+  document.getElementById('investorSignupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // simple required-file checks
+    const citizen = document.getElementById('citizen_proof').files.length;
+    const bank = document.getElementById('bank_proof').files.length;
+    if (!citizen || !bank) {
+      document.getElementById('msg').textContent = 'Please upload required KYC documents.';
+      return;
+    }
+
+    // here you'd normally send form data via fetch/XHR
+    document.getElementById('msg').textContent = '✅ Investor account created. Verification pending.';
+    this.reset();
+    // disable create button again
+    submitBtn.disabled = true;
+    submitBtn.classList.add('disabled');
+    // hide otp area
+    otpSection.style.display = 'none';
+  });
+});
+
+  </script>
+</body>
+</html>

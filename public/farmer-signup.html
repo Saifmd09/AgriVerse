@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Farmer Sign Up — AgriVerse</title>
+  <link rel="stylesheet" href="css/farmer-signup.css">
+  <style>
+    .navbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .navbar-container {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Fix Login button */
+    .nav-btn {
+      padding: 8px 16px;
+      background: #ffcc00;
+      color: #000;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    /* FIX the dropdown */
+    .lang-dropdown {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      background: #fff;
+      margin-left: 20px;
+
+      /* ensures dropdown height matches nav height */
+      height: 36px;
+    }
+
+    /* Ensure nav items never overlap */
+    .navbar-container select,
+    .navbar-container a {
+      flex-shrink: 0;
+    }
+    
+  </style>
+
+</head>
+
+<body>
+  <!-- NAV -->
+  <nav class="navbar" id="mainNav">
+    <div class="navbar-container">
+
+      <!-- Logo -->
+      <a class="navbar-brand" href="/index.html">
+        <img src="/WhatsApp Image 2025-11-07 at 01.54.15.jpeg" class="logo-img">
+      </a>
+
+      <!-- Middle menu -->
+      <ul class="navbar-nav">
+        <li><a href="/index.html" class="nav-link">About</a></li>
+        <li><a href="/index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="/index.html#perspectives" class="nav-link">Perspectives</a></li>
+        <li><a href="/index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <!-- Right side: Language + Login -->
+      <div style="display:flex; align-items:center; gap:15px;">
+        <select id="languageSelect" class="lang-dropdown">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="ta">Tamil</option>
+          <option value="te">Telugu</option>
+          <option value="kn">Kannada</option>
+          <option value="bn">Bengali</option>
+          <option value="mr">Marathi</option>
+          <option value="gu">Gujarati</option>
+          <option value="pa">Punjabi</option>
+          <option value="or">Odia</option>
+          <option value="ur">Urdu</option>
+        </select>
+
+
+        <a href="/login-page.html" class="nav-btn">Login / Sign Up</a>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- page wrapper with a fixed max width so the right image can align to it -->
+  <div class="page-wrapper">
+    <div class="container" role="main" aria-labelledby="signupTitle">
+      <div class="container-inner">
+        <h2 id="signupTitle">Farmer Registration – AgriVerse</h2>
+
+        <form id="signupForm" novalidate>
+          <h3>Personal Details</h3>
+
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" required>
+
+          <label for="email">Email *</label>
+          <div class="email-row">
+            <input type="email" id="email" required placeholder="example@gmail.com">
+            <button type="button" id="sendOtpBtn">Send OTP</button>
+          </div>
+
+          <div id="otpSection" class="otp-section" aria-hidden="true">
+            <label for="email_otp">Enter OTP *</label>
+            <div class="otp-row">
+              <input type="text" id="email_otp" maxlength="6" placeholder="Enter OTP">
+              <button type="button" id="verifyOtpBtn">Verify OTP</button>
+            </div>
+            <small id="otpMsg"> </small>
+            <div id="resendArea" style="margin-top:10px; display:none; text-align:right;">
+              <button type="button" id="resendOtpBtn" disabled>Resend OTP (30s)</button>
+            </div>
+          </div>
+
+          <label for="phone">Phone *</label>
+          <input type="text" id="phone" required>
+
+          <label for="password">Password *</label>
+          <input type="password" id="password" required>
+
+          <label for="confirm_password">Confirm Password *</label>
+          <input type="password" id="confirm_password" required>
+
+          <label for="gender">Gender *</label>
+          <select id="gender" required>
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+
+          <label for="dob">DOB *</label>
+          <input type="date" id="dob" required>
+
+          <h3>Location</h3>
+          <label for="state">State *</label>
+          <input type="text" id="state" required>
+
+          <label for="district">District *</label>
+          <input type="text" id="district" required>
+
+          <label for="village">Village *</label>
+          <input type="text" id="village" required>
+
+          <label for="address">Address *</label>
+          <textarea id="address" required rows="3"></textarea>
+
+          <h3>Farming Details</h3>
+          <label for="land_area_acres">Land Area (Acres) *</label>
+          <input type="number" id="land_area_acres" required>
+
+          <label for="farming_type">Farming Type *</label>
+          <select id="farming_type" required>
+            <option value="">Select</option>
+            <option value="crop">Crop</option>
+            <option value="dairy">Dairy</option>
+            <option value="poultry">Poultry</option>
+            <option value="fishery">Fishery</option>
+            <option value="mixed">Mixed</option>
+          </select>
+
+          <h3>Identity</h3>
+          <label for="aadhaar_last4">Aadhaar Last 4 Digits *</label>
+          <input type="text" id="aadhaar_last4" maxlength="4" required>
+
+          <h3>Bank Info</h3>
+          <label for="bank_account">Bank Account *</label>
+          <input type="text" id="bank_account" required>
+
+          <label for="bank_ifsc">IFSC *</label>
+          <input type="text" id="bank_ifsc" required>
+
+          <div style="display:flex; gap:12px; align-items:center; margin-top:6px;">
+            <button type="submit" id="submitBtn" class="disabled-btn" disabled>Create Account</button>
+            <div id="msg" style="color:#d00; font-weight:600;"></div>
+          </div>
+
+          <p style="margin-top:18px; color:#666; font-size:13px;">By creating an account you agree to our Terms &
+            Privacy.</p>
+
+          <!-- spacer so the page can scroll for testing -->
+          <div style="height:260px"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT fixed image aligned to the centered page wrapper -->
+  <div class="right-hero" aria-hidden="true">
+    <img src="farm.jpg" alt="AgriVerse promotion illustration" onerror="this.style.display='none'">
+  </div>
+
+  <!-- optional external JS -->
+  <script src="js/farmer-signup.js"></script>
+
+  <script>
+    // Navbar shrink on scroll
+    window.addEventListener('scroll', function () {
+      const nav = document.getElementById('mainNav');
+      if (window.scrollY > 30) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    });
+
+    // small demo OTP enable logic (remove if using your external js)
+    (function () {
+      const send = document.getElementById('sendOtpBtn');
+      const verify = document.getElementById('verifyOtpBtn');
+      if (!send || !verify) return;
+      const otpSection = document.getElementById('otpSection');
+      const resendArea = document.getElementById('resendArea');
+      const submit = document.getElementById('submitBtn');
+      const otpMsg = document.getElementById('otpMsg');
+
+      let fakeOtp = null, timer = null;
+      function startCountdown(sec) {
+        let c = sec;
+        resendArea.style.display = 'block';
+        const btn = document.getElementById('resendOtpBtn');
+        btn.disabled = true;
+        btn.textContent = `Resend OTP (${c}s)`;
+        clearInterval(timer);
+        timer = setInterval(() => { c--; if (c <= 0) { clearInterval(timer); btn.disabled = false; btn.textContent = 'Resend OTP'; } else btn.textContent = `Resend OTP (${c}s)`; }, 1000);
+      }
+
+      send.addEventListener('click', function () {
+        const email = document.getElementById('email').value.trim();
+        if (!email) { alert('Enter email first'); return; }
+        otpSection.setAttribute('aria-hidden', 'false');
+        fakeOtp = String(Math.floor(100000 + Math.random() * 900000));
+        otpMsg.textContent = `Demo OTP: ${fakeOtp}`;
+        startCountdown(30);
+      });
+
+      verify.addEventListener('click', function () {
+        const entered = document.getElementById('email_otp').value.trim();
+        if (entered === fakeOtp) { otpMsg.textContent = 'Email verified ✓'; submit.disabled = false; submit.classList.remove('disabled-btn'); }
+        else otpMsg.textContent = 'Incorrect OTP';
+      });
+
+      const resend = document.getElementById('resendOtpBtn');
+      if (resend) resend.addEventListener('click', function () { fakeOtp = String(Math.floor(100000 + Math.random() * 900000)); otpMsg.textContent = `Resent OTP: ${fakeOtp}`; startCountdown(30); });
+    })();
+  </script>
+  <script>
+    const translations = {
+      en: {
+        title: "Farmer Registration – AgriVerse",
+        personal: "Personal Details",
+        name: "Full Name *",
+        email: "Email *",
+        sendOtp: "Send OTP",
+        verifyOtp: "Verify OTP",
+        phone: "Phone *",
+        password: "Password *",
+        confirm_password: "Confirm Password *",
+        gender: "Gender *",
+        dob: "DOB *",
+        state: "State *",
+        district: "District *",
+        village: "Village *",
+        address: "Address *",
+        farming: "Farming Details",
+        land: "Land Area (Acres) *",
+        farming_type: "Farming Type *",
+        aadhaar: "Aadhaar Last 4 Digits *",
+        bank_account: "Bank Account *",
+        ifsc: "IFSC *",
+        create: "Create Account"
+      },
+
+      hi: {
+        title: "किसान पंजीकरण – AgriVerse",
+        personal: "व्यक्तिगत विवरण",
+        name: "पूरा नाम *",
+        email: "ईमेल *",
+        sendOtp: "OTP भेजें",
+        verifyOtp: "OTP सत्यापित करें",
+        phone: "फ़ोन *",
+        password: "पासवर्ड *",
+        confirm_password: "पासवर्ड की पुष्टि करें *",
+        gender: "लिंग *",
+        dob: "जन्म तिथि *",
+        state: "राज्य *",
+        district: "जिला *",
+        village: "गाँव *",
+        address: "पता *",
+        farming: "खेती संबंधी जानकारी",
+        land: "भूमि क्षेत्र (एकड़) *",
+        farming_type: "खेती का प्रकार *",
+        aadhaar: "आधार के अंतिम 4 अंक *",
+        bank_account: "बैंक खाता *",
+        ifsc: "IFSC *",
+        create: "खाता बनाएं"
+      },
+
+      ta: {
+        title: "விவசாயி பதிவு – AgriVerse",
+        personal: "தனிப்பட்ட விவரங்கள்",
+        name: "முழு பெயர் *",
+        email: "மின்னஞ்சல் *",
+        sendOtp: "OTP அனுப்பு",
+        verifyOtp: "OTP சரிபார்",
+        phone: "தொலைபேசி *",
+        password: "கடவுச்சொல் *",
+        confirm_password: "கடவுச்சொல் உறுதி *",
+        gender: "பாலினம் *",
+        dob: "பிறந்த தேதி *",
+        state: "மாநிலம் *",
+        district: "மாவட்டம் *",
+        village: "கிராமம் *",
+        address: "முகவரி *",
+        farming: "விவசாய விவரங்கள்",
+        land: "நிலப்பரப்பு (ஏக்கர்) *",
+        farming_type: "விவசாய வகை *",
+        aadhaar: "ஆதார் இறுதி 4 இலக்கங்கள் *",
+        bank_account: "வங்கி கணக்கு *",
+        ifsc: "IFSC *",
+        create: "கணக்கை உருவாக்கவும்"
+      },
+
+      te: {
+        title: "రైతు నమోదు – AgriVerse",
+        personal: "వ్యక్తిగత వివరాలు",
+        name: "పూర్తి పేరు *",
+        email: "ఈమెయిల్ *",
+        sendOtp: "OTP పంపండి",
+        verifyOtp: "OTP ధృవీకరించండి",
+        phone: "ఫోన్ *",
+        password: "పాస్వర్డ్ *",
+        confirm_password: "పాస్వర్డ్ నిర్ధారణ *",
+        gender: "లింగం *",
+        dob: "జన్మ తేదీ *",
+        state: "రాష్ట్రం *",
+        district: "జిల్లా *",
+        village: "గ్రామం *",
+        address: "చిరునామా *",
+        farming: "వ్యవసాయ వివరాలు",
+        land: "భూభాగం (ఎకరాలు) *",
+        farming_type: "వ్యవసాయ రకం *",
+        aadhaar: "ఆధార్ చివరి 4 అంకెలు *",
+        bank_account: "బ్యాంక్ ఖాతా *",
+        ifsc: "IFSC *",
+        create: "ఖాతా సృష్టించండి"
+      },
+
+      kn: {
+        title: "ರೈತರ ನೋಂದಣಿ – AgriVerse",
+        personal: "ವೈಯಕ್ತಿಕ ವಿವರಗಳು",
+        name: "ಪೂರ್ಣ ಹೆಸರು *",
+        email: "ಇಮೇಲ್ *",
+        sendOtp: "OTP ಕಳುಹಿಸಿ",
+        verifyOtp: "OTP ಪರಿಶೀಲಿಸಿ",
+        phone: "ಫೋನ್ *",
+        password: "ಪಾಸ್ವರ್ಡ್ *",
+        confirm_password: "ಪಾಸ್ವರ್ಡ್ ದೃಢೀಕರಿಸಿ *",
+        gender: "ಲಿಂಗ *",
+        dob: "ಜನ್ಮ ದಿನಾಂಕ *",
+        state: "ರಾಜ್ಯ *",
+        district: "ಜಿಲ್ಲೆ *",
+        village: "ಗ್ರಾಮ *",
+        address: "ವಿಳಾಸ *",
+        farming: "ಕೃಷಿ ವಿವರಗಳು",
+        land: "ಭೂ ಪ್ರದೇಶ (ಎಕರೆಗಳು) *",
+        farming_type: "ಕೃಷಿ ಪ್ರಕಾರ *",
+        aadhaar: "ಆಧಾರ್ ಕೊನೆ 4 ಸಂಖ್ಯೆಗಳು *",
+        bank_account: "ಬ್ಯಾಂಕ್ ಖಾತೆ *",
+        ifsc: "IFSC *",
+        create: "ಖಾತೆ ಸೃಷ್ಟಿಸಿ"
+      },
+
+      bn: {
+        title: "কৃষক রেজিস্ট্রেশন – AgriVerse",
+        personal: "ব্যক্তিগত তথ্য",
+        name: "পূর্ণ নাম *",
+        email: "ইমেল *",
+        sendOtp: "OTP পাঠান",
+        verifyOtp: "OTP যাচাই করুন",
+        phone: "ফোন *",
+        password: "পাসওয়ার্ড *",
+        confirm_password: "পাসওয়ার্ড নিশ্চিত করুন *",
+        gender: "লিঙ্গ *",
+        dob: "জন্ম তারিখ *",
+        state: "রাজ্য *",
+        district: "জেলা *",
+        village: "গ্রাম *",
+        address: "ঠিকানা *",
+        farming: "চাষাবাদ তথ্য",
+        land: "জমির পরিমাণ (একর) *",
+        farming_type: "চাষের ধরন *",
+        aadhaar: "আধার শেষ 4 সংখ্যা *",
+        bank_account: "ব্যাংক অ্যাকাউন্ট *",
+        ifsc: "IFSC *",
+        create: "অ্যাকাউন্ট তৈরি করুন"
+      },
+
+      mr: {
+        title: "शेतकरी नोंदणी – AgriVerse",
+        personal: "वैयक्तिक माहिती",
+        name: "पूर्ण नाव *",
+        email: "ईमेल *",
+        sendOtp: "OTP पाठवा",
+        verifyOtp: "OTP तपासा",
+        phone: "फोन *",
+        password: "पासवर्ड *",
+        confirm_password: "पासवर्डची खात्री करा *",
+        gender: "लिंग *",
+        dob: "जन्मतारीख *",
+        state: "राज्य *",
+        district: "जिल्हा *",
+        village: "गाव *",
+        address: "पत्ता *",
+        farming: "शेती तपशील",
+        land: "जमिनीचे क्षेत्रफळ (एकर) *",
+        farming_type: "शेतीचा प्रकार *",
+        aadhaar: "आधारचे शेवटचे 4 अंक *",
+        bank_account: "बँक खाते *",
+        ifsc: "IFSC *",
+        create: "खाते तयार करा"
+      },
+
+      gu: {
+        title: "ખેડૂત નોંધણી – AgriVerse",
+        personal: "વ્યક્તિગત વિગતો",
+        name: "પૂર્ણ નામ *",
+        email: "ઈમેલ *",
+        sendOtp: "OTP મોકલો",
+        verifyOtp: "OTP ચકાસો",
+        phone: "ફોન *",
+        password: "પાસવર્ડ *",
+        confirm_password: "પાસવર્ડ ખાતરી કરો *",
+        gender: "લિંગ *",
+        dob: "જન્મ તારીખ *",
+        state: "રાજ્ય *",
+        district: "જીલ્લો *",
+        village: "ગામ *",
+        address: "સરનામું *",
+        farming: "ખેતી વિગતો",
+        land: "જમીન વિસ્તાર (એકર) *",
+        farming_type: "ખેતીનો પ્રકાર *",
+        aadhaar: "આધારના છેલ્લાં 4 અંક *",
+        bank_account: "બેંક ખાતું *",
+        ifsc: "IFSC *",
+        create: "ખાતું બનાવો"
+      },
+
+      pa: {
+        title: "ਕਿਸਾਨ ਰਜਿਸਟ੍ਰੇਸ਼ਨ – AgriVerse",
+        personal: "ਨਿੱਜੀ ਜਾਣਕਾਰੀ",
+        name: "ਪੂਰਾ ਨਾਮ *",
+        email: "ਈਮੇਲ *",
+        sendOtp: "OTP ਭੇਜੋ",
+        verifyOtp: "OTP ਜਾਂਚੋ",
+        phone: "ਫੋਨ *",
+        password: "ਪਾਸਵਰਡ *",
+        confirm_password: "ਪਾਸਵਰਡ ਪੁਸ਼ਟੀ *",
+        gender: "ਲਿੰਗ *",
+        dob: "ਜਨਮ ਮਿਤੀ *",
+        state: "ਰਾਜ *",
+        district: "ਜ਼ਿਲ੍ਹਾ *",
+        village: "ਪਿੰਡ *",
+        address: "ਪਤਾ *",
+        farming: "ਖੇਤੀਬਾੜੀ ਵੇਰਵਾ",
+        land: "ਜ਼ਮੀਨ ਖੇਤਰਫਲ (ਐਕੜ) *",
+        farming_type: "ਖੇਤੀ ਦੀ ਕਿਸਮ *",
+        aadhaar: "ਆਧਾਰ ਦੇ ਆਖਰੀ 4 ਅੰਕ *",
+        bank_account: "ਬੈਂਕ ਖਾਤਾ *",
+        ifsc: "IFSC *",
+        create: "ਖਾਤਾ ਬਣਾਓ"
+      },
+
+      or: {
+        title: "କୃଷକ ନିବନ୍ଧନ – AgriVerse",
+        personal: "ବ୍ୟକ୍ତିଗତ ବିବରଣୀ",
+        name: "ପୂର୍ଣ୍ଣ ନାମ *",
+        email: "ଇମେଲ୍ *",
+        sendOtp: "OTP ପଠାନ୍ତୁ",
+        verifyOtp: "OTP ସତ୍ୟାପନ କରନ୍ତୁ",
+        phone: "ଫୋନ୍ *",
+        password: "ପାସୱାର୍ଡ *",
+        confirm_password: "ପାସୱାର୍ଡ ନିଶ୍ଚିତ କରନ୍ତୁ *",
+        gender: "ଲିଙ୍ଗ *",
+        dob: "ଜନ୍ମତାରିଖ *",
+        state: "ରାଜ୍ୟ *",
+        district: "ଜିଲ୍ଲା *",
+        village: "ଗାଁ *",
+        address: "ଠିକଣା *",
+        farming: "କୃଷି ବିବରଣୀ",
+        land: "ଜମିର ଅଞ୍ଚଳ (ଏକର) *",
+        farming_type: "କୃଷି ପ୍ରକାର *",
+        aadhaar: "ଆଧାର ଶେଷ 4 ଅଙ୍କ *",
+        bank_account: "ବ୍ୟାଙ୍କ ଖାତା *",
+        ifsc: "IFSC *",
+        create: "ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ"
+      },
+
+      ur: {
+        title: "کسان رجسٹریشن – AgriVerse",
+        personal: "ذاتی معلومات",
+        name: "پورا نام *",
+        email: "ای میل *",
+        sendOtp: "OTP بھیجیں",
+        verifyOtp: "OTP کی تصدیق کریں",
+        phone: "فون *",
+        password: "پاس ورڈ *",
+        confirm_password: "پاس ورڈ کی تصدیق *",
+        gender: "صنف *",
+        dob: "تاریخ پیدائش *",
+        state: "ریاست *",
+        district: "ضلع *",
+        village: "گاؤں *",
+        address: "پتہ *",
+        farming: "زرعی معلومات",
+        land: "زمین کا رقبہ (ایکڑ) *",
+        farming_type: "زراعت کی قسم *",
+        aadhaar: "آدھار کے آخری 4 ہندسے *",
+        bank_account: "بینک اکاؤنٹ *",
+        ifsc: "IFSC *",
+        create: "اکاؤنٹ بنائیں"
+      }
+    };
+
+    function changeLang(lang) {
+      const t = translations[lang];
+
+      document.getElementById("signupTitle").textContent = t.title;
+      document.querySelector("h3").textContent = t.personal;
+      document.querySelector("label[for='name']").textContent = t.name;
+      document.querySelector("label[for='email']").textContent = t.email;
+      document.getElementById("sendOtpBtn").textContent = t.sendOtp;
+      document.getElementById("verifyOtpBtn").textContent = t.verifyOtp;
+      document.querySelector("label[for='phone']").textContent = t.phone;
+      document.querySelector("label[for='password']").textContent = t.password;
+      document.querySelector("label[for='confirm_password']").textContent = t.confirm_password;
+      document.querySelector("label[for='gender']").textContent = t.gender;
+      document.querySelector("label[for='dob']").textContent = t.dob;
+      document.querySelector("label[for='state']").textContent = t.state;
+      document.querySelector("label[for='district']").textContent = t.district;
+      document.querySelector("label[for='village']").textContent = t.village;
+      document.querySelector("label[for='address']").textContent = t.address;
+
+      // farming heading
+      document.querySelectorAll("h3")[1].textContent = t.farming;
+
+      document.querySelector("label[for='land_area_acres']").textContent = t.land;
+      document.querySelector("label[for='farming_type']").textContent = t.farming_type;
+
+      document.querySelector("h3:nth-of-type(3)").textContent = t.identity || "Identity";
+
+      document.querySelector("label[for='aadhaar_last4']").textContent = t.aadhaar;
+      document.querySelector("label[for='bank_account']").textContent = t.bank_account;
+      document.querySelector("label[for='bank_ifsc']").textContent = t.ifsc;
+
+      document.getElementById("submitBtn").textContent = t.create;
+    }
+
+    document.getElementById("languageSelect").addEventListener("change", function () {
+      changeLang(this.value);
+    });
+    function moveHandTo(elementId) {
+  const el = document.getElementById(elementId);
+  const hand = document.getElementById("guideHand");
+
+  const rect = el.getBoundingClientRect();
+  hand.style.top = (rect.top + window.scrollY - 10) + "px";
+  hand.style.left = (rect.left + rect.width + 10) + "px";
+}
+
+// Step 1: show hand on Send OTP
+moveHandTo("sendOtpBtn");
+
+document.getElementById("sendOtpBtn").addEventListener("click", () => {
+  moveHandTo("email_otp"); // step 2
+});
+
+document.getElementById("verifyOtpBtn").addEventListener("click", () => {
+  moveHandTo("submitBtn"); // final
+});
+
+  </script>
+
+</body>
+
+</html>

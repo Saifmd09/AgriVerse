@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Verification - Agriverse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a5319 0%, #2d7a2c 50%, #4ca64c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(rgba(26, 83, 25, 0.85), rgba(45, 122, 44, 0.85)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%234CA64C" width="100" height="100"/><path fill="%232D7A2C" d="M20,20 L80,20 L80,80 L20,80 Z M30,30 L70,30 L70,70 L30,70 Z"/></svg>');
+            background-size: cover;
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-panel {
+            flex: 1;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            margin-right: 15px;
+            color: #8BC34A;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .tagline {
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .features {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .features i {
+            margin-right: 10px;
+            color: #8BC34A;
+        }
+
+        .verification-icon {
+            width: 100px;
+            height: 100px;
+            background: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            animation: pulse 2s infinite;
+        }
+
+        .verification-icon i {
+            font-size: 50px;
+            color: #4CAF50;
+        }
+
+        h1 {
+            color: #2d7a2c;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .message {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .highlight {
+            color: #2d7a2c;
+            font-weight: 600;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: #e0e0e0;
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 20px;
+            color: #9e9e9e;
+        }
+
+        .step.active .step-icon {
+            border-color: #4CAF50;
+            background: #4CAF50;
+            color: white;
+        }
+
+        .step.completed .step-icon {
+            border-color: #4CAF50;
+            background: #4CAF50;
+            color: white;
+        }
+
+        .step-text {
+            font-size: 12px;
+            color: #9e9e9e;
+        }
+
+        .step.active .step-text {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .step.completed .step-text {
+            color: #4CAF50;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .contact-info a {
+            color: #2d7a2c;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(76, 175, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 40px 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .message {
+                font-size: 16px;
+            }
+            
+            .process-steps {
+                flex-wrap: wrap;
+            }
+            
+            .step {
+                flex: 0 0 50%;
+                margin-bottom: 20px;
+            }
+            
+            .process-steps::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="logo">
+                <i class="fas fa-seedling logo-icon"></i>
+                <div class="logo-text">AGRIVERSE</div>
+            </div>
+            <p class="tagline">Cultivating sustainable investments in agriculture for a prosperous future.</p>
+            <ul class="features">
+                <li><i class="fas fa-check-circle"></i> Farm-to-Table Investment Opportunities</li>
+                <li><i class="fas fa-check-circle"></i> Sustainable Agriculture Projects</li>
+                <li><i class="fas fa-check-circle"></i> Real-time Portfolio Tracking</li>
+                <li><i class="fas fa-check-circle"></i> Expert Market Analysis</li>
+                <li><i class="fas fa-check-circle"></i> Direct Farmer Connections</li>
+            </ul>
+        </div>
+        
+        <div class="right-panel">
+            <div class="verification-icon">
+                <i class="fas fa-envelope-open-text"></i>
+            </div>
+            
+            <h1>Verification In Progress</h1>
+            
+            <div class="message">
+                <p>Our team will send you an email <span class="highlight">after verification</span> and your Agriverse account will be created soon.</p>
+                <p>You're one step closer to investing in sustainable agriculture!</p>
+            </div>
+
+            <div class="process-steps">
+                <div class="step completed">
+                    <div class="step-icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <div class="step-text">Registration</div>
+                </div>
+                <div class="step active">
+                    <div class="step-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="step-text">Verification</div>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-text">Account Ready</div>
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <p>If you have any questions, please contact our support team at <a href="mailto:support@agriverse.com">support@agriverse.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple animation for the process steps
+        document.addEventListener('DOMContentLoaded', function() {
+            const steps = document.querySelectorAll('.step');
+            let currentStep = 1;
+            
+            function updateSteps() {
+                steps.forEach((step, index) => {
+                    if (index < currentStep) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (index === currentStep) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+                
+                currentStep++;
+                if (currentStep > steps.length) {
+                    currentStep = 1;
+                }
+            }
+            
+            // Change step every 3 seconds
+            setInterval(updateSteps, 3000);
+        });
+    </script>
+</body>
+</html>

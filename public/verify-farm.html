@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Farm Verification – AgriVerse</title>
+  <link rel="stylesheet" href="css/verify-farm.css">
+  <style>
+    #map {
+      width: 100%;
+      height: 300px;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" id="mainNav">
+    <div class="navbar-container">
+      <a class="navbar-brand" href="/index.html">
+        <img src="/WhatsApp Image 2025-11-07 at 01.54.15.jpeg" alt="AgriVerse Logo" class="logo-img">
+        <span></span>
+      </a>
+      <ul class="navbar-nav">
+        <li><a href="/index.html" class="nav-link">About</a></li>
+        <li><a href="/index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="/index.html#perspectives" class="nav-link">Perspectives</a></li>
+        <li><a href="/index.html#contact" class="nav-link">Contact</a></li>
+        <li><a href="/login-page.html" class="nav-btn">Login / Sign Up</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Layout -->
+  <div class="page-wrapper">
+    <div class="container">
+      <h2>🌾 Farm Verification – AgriVerse</h2>
+      <p class="subtitle">Complete the following steps to verify your farm identity.</p>
+
+      <form id="verifyFarmForm" enctype="multipart/form-data">
+        <!-- Step 1 -->
+        <div class="step">
+          <h3>Step 1 – Identity Verification</h3>
+          <label>Aadhaar Card (Front / Back)</label>
+          <input type="file" id="aadhaar_doc" name="aadhaar_doc" accept="image/*,application/pdf" required>
+
+          <label>Selfie holding Aadhaar</label>
+          <input type="file" id="selfie_doc" name="selfie_doc" accept="image/*" required>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+          <h3>Step 2 – Farm Ownership & Location</h3>
+          <label>Land Ownership Document (Patta / Deed / Certificate)</label>
+          <input type="file" id="land_doc" name="land_doc" accept="image/*,application/pdf" required>
+
+          <button type="button" id="openMapBtn">🗺️ Select Farm Location on Map</button>
+          <div id="map"></div>
+
+          <p id="locationResult">No location selected.</p>
+          <input type="hidden" id="latitude" name="latitude">
+          <input type="hidden" id="longitude" name="longitude">
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+          <h3>Step 3 – Farm Photo Proof</h3>
+          <label>Upload Farm Images (2–3 images)</label>
+          <input type="file" id="farm_photos" name="farm_photos[]" multiple accept="image/*" required>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit for Verification</button>
+        <p id="msg"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Right Fixed Image -->
+  <div class="right-hero">
+    <img src="farm.jpg" alt="AgriVerse Farm Verification">
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/verify-farm.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCixr2o2vmsR_xu5OJaqRWXF5_M1fDeZ6o&callback=initMap"
+    async defer></script>
+    
+
+  <script>
+    // Initialize map and handle location selection
+    function initMap() {
+      let map, marker;
+      const mapDiv = document.getElementById("map");
+      const openMapBtn = document.getElementById("openMapBtn");
+      const locationResult = document.getElementById("locationResult");
+      const latInput = document.getElementById("latitude");
+      const lonInput = document.getElementById("longitude");
+
+      openMapBtn.addEventListener("click", () => {
+        mapDiv.style.display = "block";
+        if (!map) {
+          map = new google.maps.Map(mapDiv, {
+            center: { lat: 20.5937, lng: 78.9629 },
+            zoom: 5,
+          });
+
+          map.addListener("click", (e) => {
+            if (marker) marker.setMap(null);
+            marker = new google.maps.Marker({
+              position: e.latLng,
+              map: map,
+            });
+
+            const lat = e.latLng.lat().toFixed(6);
+            const lng = e.latLng.lng().toFixed(6);
+            locationResult.textContent = `Selected Location: (${lat}, ${lng})`;
+            latInput.value = lat;
+            lonInput.value = lng;
+          });
+        }
+      });
+    }
+
+    // Handle form submission
+    document.getElementById("verifyFarmForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      document.getElementById("msg").textContent = "✅ Farm verification submitted successfully!";
+      this.reset();
+    });
+
+  </script>
+</body>
+
+</html>

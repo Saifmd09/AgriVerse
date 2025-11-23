@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Supplier Sign Up — AgriVerse</title>
+  <link rel="stylesheet" href="css/farmer-signup.css">
+  <style>
+
+    .category-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .right-hero{
+        margin-top: 100px;
+    }
+
+    .file-upload-section {
+      margin-top: 15px;
+    }
+
+    .file-upload-item {
+      margin-bottom: 12px;
+    }
+
+    .file-hint {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .hidden {
+      display: none;
+    }
+    /* Fix alignment */
+.submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* Fix create account button look */
+#submitBtn {
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #1b5e20, #4caf50);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    opacity: 1;
+}
+
+/* Hover effect */
+#submitBtn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    transform: translateY(-1px);
+}
+
+/* Disabled state */
+#submitBtn:disabled {
+    background: #bdbdbd !important;
+    cursor: not-allowed !important;
+    opacity: 0.7 !important;
+}
+
+/* Fix alignment */
+.submit-row {
+    margin-top: 20px;
+    width: 100%;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" id="mainNav" aria-label="Main navigation">
+    <div class="navbar-container">
+      <a class="navbar-brand" href="/index.html">
+        <img src="/WhatsApp Image 2025-11-07 at 01.54.15.jpeg" alt="AgriVerse" class="logo-img" onerror="this.style.display='none'">
+        <span class="brand-text"></span>
+      </a>
+
+      <ul class="navbar-nav" id="navList">
+        <li><a href="/index.html" class="nav-link">About</a></li>
+        <li><a href="/index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="/index.html#perspectives" class="nav-link">Perspectives</a></li>
+        <li><a href="/index.html#contact" class="nav-link">Contact</a></li>
+        <li><a href="/login-page.html" class="nav-btn">Login / Sign Up</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Wrapper -->
+  <div class="page-wrapper">
+    <div class="container" role="main" aria-labelledby="signupTitle">
+      <div class="container-inner">
+
+        <h2 id="signupTitle">Supplier Registration – AgriVerse</h2>
+
+        <form id="supplierSignupForm" novalidate>
+
+          <!-- BUSINESS DETAILS -->
+          <h3>Business Details</h3>
+
+          <label for="business_name">Business Name *</label>
+          <input type="text" id="business_name" required>
+
+          <label>Category of Supply *</label>
+          <div class="category-options">
+            <label><input type="checkbox" name="category" value="seeds"> Seeds</label>
+            <label><input type="checkbox" name="category" value="fertilizers"> Fertilizers</label>
+            <label><input type="checkbox" name="category" value="machines"> Machines</label>
+            <label><input type="checkbox" name="category" value="feed"> Feed</label>
+            <label><input type="checkbox" name="category" value="vet"> Veterinary</label>
+            <label><input type="checkbox" id="otherCategory" name="category" value="other"> Other</label>
+          </div>
+
+          <!-- SHOW ONLY WHEN OTHER IS SELECTED -->
+          <div id="otherCategoryBox" class="hidden" style="margin-top:10px;">
+            <label for="other_text">Enter Other Category *</label>
+            <input type="text" id="other_text">
+          </div>
+
+          <!-- CONTACT -->
+          <h3>Contact Information</h3>
+
+          <label for="email">Email *</label>
+          <div class="email-row">
+            <input type="email" id="email" required placeholder="example@gmail.com">
+            <button type="button" id="sendEmailOtpBtn">Send OTP</button>
+          </div>
+          <small id="emailError" style="color:red"></small>
+
+          <!-- Email OTP -->
+          <div id="emailOtpSection" class="otp-section" aria-hidden="true">
+            <label>Enter Email OTP *</label>
+            <div class="otp-row">
+              <input type="text" id="email_otp" maxlength="6">
+              <button type="button" id="verifyEmailOtpBtn">Verify OTP</button>
+            </div>
+            <small id="emailOtpMsg"></small>
+            <div id="resendEmailArea" style="margin-top:10px; display:none; text-align:right;">
+              <button type="button" id="resendEmailOtpBtn" disabled>Resend OTP (30s)</button>
+            </div>
+          </div>
+
+          <label for="phone">Phone *</label>
+<input type="text" id="phone" required placeholder="10-digit mobile">
+          <!-- PASSWORD -->
+          <h3>Create Password</h3>
+
+          <label for="password">Password *</label>
+          <input type="password" id="password" required>
+          <small id="passwordError" style="color:red"></small>
+
+          <label for="confirm_password">Confirm Password *</label>
+          <input type="password" id="confirm_password" required>
+          <small id="confirmPasswordError" style="color:red"></small>
+
+          <!-- ADDRESS -->
+          <h3>Business Address</h3>
+
+          <label>Address *</label>
+          <textarea id="address" required rows="3"></textarea>
+
+          <label>State *</label>
+          <input type="text" id="state" required>
+
+          <label>District *</label>
+          <input type="text" id="district" required>
+
+          <label>Pincode *</label>
+          <input type="text" id="pincode" required>
+
+          <!-- BUSINESS REGISTRATION -->
+          <h3>Business Registration</h3>
+
+          <label>GST Number *</label>
+          <input type="text" id="gst_number" required>
+
+          <label>PAN Number *</label>
+          <input type="text" id="pan_number" required>
+
+          <label>Business License Number *</label>
+          <input type="text" id="business_license" required>
+
+          <!-- BANK DETAILS -->
+          <h3>Bank Details</h3>
+
+          <label>Bank Account Number *</label>
+          <input type="text" id="bank_account" required>
+
+          <label>Bank Name *</label>
+          <input type="text" id="bank_name" required>
+
+          <label>IFSC Code *</label>
+          <input type="text" id="bank_ifsc" required>
+
+          <label>Account Holder Name *</label>
+          <input type="text" id="account_holder" required>
+
+
+          <!-- DOCUMENT UPLOADS -->
+          <h3>Document Uploads</h3>
+
+          <div class="file-upload-section">
+
+            <div class="file-upload-item">
+              <label for="gst_certificate">GST Certificate *</label>
+              <input type="file" id="gst_certificate" accept="image/*,application/pdf" required>
+            </div>
+
+            <div class="file-upload-item">
+              <label for="id_proof">ID Proof *</label>
+              <input type="file" id="id_proof" accept="image/*,application/pdf" required>
+            </div>
+
+            <div class="file-upload-item">
+              <label for="warehouse_photo">Warehouse Photo *</label>
+              <input type="file" id="warehouse_photo" accept="image/*" required>
+            </div>
+
+            <div class="file-upload-item">
+              <label for="business_license_doc">Business License Document *</label>
+              <input type="file" id="business_license_doc" accept="image/*,application/pdf" required>
+            </div>
+
+          </div>
+
+         <div class="submit-row">
+            <button type="submit" id="submitBtn" class="disabled-btn" disabled>Create Supplier Account</button>
+            <div id="msg" style="color:green; font-weight:600;"></div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Right illustration -->
+  <div class="right-hero" aria-hidden="true">
+    <img src="/public/supplier.png" alt="">
+  </div>
+
+<script>
+/* ==========================================================
+   SUPPLIER SIGNUP – COMPLETE CLEAN WORKING SCRIPT
+   Handles:
+   ✅ Other category
+   ✅ Email OTP send + resend + verify
+   ✅ Form validation
+   ✅ Category selection validation
+   ✅ Final form submission with files
+========================================================== */
+
+// ==========================================================
+// SHOW/HIDE OTHER CATEGORY INPUT
+// ==========================================================
+const otherCheckbox = document.getElementById("otherCategory");
+const otherBox = document.getElementById("otherCategoryBox");
+
+otherCheckbox.addEventListener("change", () => {
+    if (otherCheckbox.checked) {
+        otherBox.classList.remove("hidden");
+        document.getElementById("other_text").setAttribute("required", "true");
+    } else {
+        otherBox.classList.add("hidden");
+        document.getElementById("other_text").removeAttribute("required");
+    }
+});
+
+// ==========================================================
+// FORM VALIDATION
+// ==========================================================
+function validateForm() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm_password").value;
+
+    let valid = true;
+
+    // Email validation
+    const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailFormat.test(email)) {
+        document.getElementById("emailError").textContent = "Invalid email format";
+        valid = false;
+    } else {
+        document.getElementById("emailError").textContent = "";
+    }
+
+    // Password validation
+    if (password.length < 6) {
+        document.getElementById("passwordError").textContent = "Password must be at least 6 characters";
+        valid = false;
+    } else {
+        document.getElementById("passwordError").textContent = "";
+    }
+
+    // Confirm password
+    if (password !== confirmPassword) {
+        document.getElementById("confirmPasswordError").textContent = "Passwords do not match";
+        valid = false;
+    } else {
+        document.getElementById("confirmPasswordError").textContent = "";
+    }
+
+    document.getElementById("submitBtn").disabled = !valid;
+}
+
+document.querySelectorAll("input").forEach(inp => {
+    inp.addEventListener("input", validateForm);
+});
+
+// ==========================================================
+// EMAIL OTP SYSTEM
+// ==========================================================
+let emailVerified = false;
+let resendTimer = null;
+let countdown = 30;
+
+// Start resend countdown
+function startResendCountdown() {
+    const btn = document.getElementById("resendEmailOtpBtn");
+    const area = document.getElementById("resendEmailArea");
+
+    area.style.display = "block";
+    btn.disabled = true;
+
+    countdown = 30;
+    btn.innerText = `Resend OTP (${countdown}s)`;
+
+    resendTimer = setInterval(() => {
+        countdown--;
+        btn.innerText = `Resend OTP (${countdown}s)`;
+
+        if (countdown <= 0) {
+            clearInterval(resendTimer);
+            btn.disabled = false;
+            btn.innerText = "Resend OTP";
+        }
+    }, 1000);
+}
+
+// SEND OTP
+function sendEmailOtp(isResend = false) {
+    const email = document.getElementById("email").value.trim();
+    const section = document.getElementById("emailOtpSection");
+    const msg = document.getElementById("emailOtpMsg");
+
+    if (!email) {
+        alert("Enter email first.");
+        return;
+    }
+
+    let fd = new FormData();
+    fd.append("email", email);
+
+    fetch("../backend/send-supplier-email-otp.php", {
+        method: "POST",
+        body: fd
+    })
+    .then(res => res.text())
+    .then(data => {
+        section.style.display = "block";
+
+        if (data.includes("OTP_SENT")) {
+            msg.style.color = "green";
+            msg.innerHTML = isResend
+                ? "🔁 New OTP has been sent."
+                : "✅ OTP sent to your email.";
+
+            startResendCountdown();
+        } else {
+            msg.style.color = "red";
+            msg.innerHTML = "⚠️ Could not send OTP. Try again.";
+        }
+    });
+}
+
+// Bind OTP buttons
+document.getElementById("sendEmailOtpBtn").addEventListener("click", () => sendEmailOtp(false));
+document.getElementById("resendEmailOtpBtn").addEventListener("click", () => sendEmailOtp(true));
+
+// VERIFY OTP
+document.getElementById("verifyEmailOtpBtn").addEventListener("click", () => {
+    let otp = document.getElementById("email_otp").value.trim();
+    let msg = document.getElementById("emailOtpMsg");
+
+    if (!otp) {
+        alert("Enter OTP first.");
+        return;
+    }
+
+    let fd = new FormData();
+    fd.append("otp", otp);
+
+    fetch("../backend/verify-supplier-email-otp.php", {
+        method: "POST",
+        body: fd
+    })
+    .then(res => res.text())
+    .then(data => {
+        if (data === "VERIFIED") {
+            emailVerified = true;
+
+            msg.style.color = "green";
+            msg.innerHTML = "✅ Email verified successfully.";
+
+            clearInterval(resendTimer);
+
+            document.getElementById("email").disabled = true;
+            document.getElementById("sendEmailOtpBtn").disabled = true;
+            document.getElementById("resendEmailOtpBtn").disabled = true;
+
+        } else if (data === "INVALID_OTP") {
+            msg.style.color = "red";
+            msg.innerHTML = "❌ Invalid OTP.";
+        }
+        else if (data === "OTP_EXPIRED") {
+            msg.style.color = "red";
+            msg.innerHTML = "⚠️ OTP expired. Please resend.";
+        }
+        else {
+            msg.style.color = "red";
+            msg.innerHTML = data;
+        }
+    });
+});
+
+// ==========================================================
+// SUBMIT SUPPLIER FORM
+// ==========================================================
+document.getElementById("supplierSignupForm").addEventListener("submit", e => {
+    e.preventDefault();
+
+    if (!emailVerified) {
+        alert("Please verify your email before submitting.");
+        return;
+    }
+
+    // Validate Category
+    const selectedCategories = [...document.querySelectorAll("input[name='category']:checked")].map(c => c.value);
+
+    if (selectedCategories.length === 0) {
+        alert("Please select at least one supply category.");
+        return;
+    }
+
+    let otherCategoryValue = "";
+    if (selectedCategories.includes("other")) {
+        otherCategoryValue = document.getElementById("other_text").value.trim();
+        if (!otherCategoryValue) {
+            alert("Please enter the custom category.");
+            return;
+        }
+    }
+
+    // Build FormData
+    let fd = new FormData();
+    fd.append("business_name", document.getElementById("business_name").value);
+
+    selectedCategories.forEach(cat => {
+    fd.append("category[]", cat);
+});
+    fd.append("other_category", otherCategoryValue);
+
+    fd.append("email", document.getElementById("email").value);
+    fd.append("phone", document.getElementById("phone").value);
+    fd.append("password", document.getElementById("password").value);
+    fd.append("confirm_password", document.getElementById("confirm_password").value);
+
+    fd.append("address", document.getElementById("address").value);
+    fd.append("state", document.getElementById("state").value);
+    fd.append("district", document.getElementById("district").value);
+    fd.append("pincode", document.getElementById("pincode").value);
+
+    fd.append("gst_number", document.getElementById("gst_number").value);
+    fd.append("pan_number", document.getElementById("pan_number").value);
+    fd.append("business_license", document.getElementById("business_license").value);
+
+    fd.append("bank_account", document.getElementById("bank_account").value);
+    fd.append("bank_name", document.getElementById("bank_name").value);
+    fd.append("bank_ifsc", document.getElementById("bank_ifsc").value);
+    fd.append("account_holder", document.getElementById("account_holder").value);
+
+    // File uploads
+    fd.append("gst_certificate", document.getElementById("gst_certificate").files[0]);
+    fd.append("id_proof", document.getElementById("id_proof").files[0]);
+    fd.append("warehouse_photo", document.getElementById("warehouse_photo").files[0]);
+    fd.append("business_license_doc", document.getElementById("business_license_doc").files[0]);
+
+    // Submit to backend
+    fetch("../backend/register-supplier.php", {
+        method: "POST",
+        body: fd
+    })
+    .then(res => res.text())
+    .then(data => {
+        const msg = document.getElementById("msg");
+
+        if (data.trim() === "SUCCESS") {
+            msg.style.color = "green";
+            msg.innerHTML = "✅ Supplier registered successfully!";
+            setTimeout(() => {
+                window.location.href = "under_verification.html";
+            }, 1500);
+        } else {
+            msg.style.color = "red";
+            msg.innerHTML = data;
+        }
+    });
+});
+</script>
+
+
+</body>
+</html>

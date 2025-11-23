@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Verification – AgriVerse</title>
+    <link rel="stylesheet" href="css/verify-investor.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" id="mainNav" aria-label="Main navigation">
+    <div class="navbar-container">
+      <a class="navbar-brand" href="/index.html">
+        <img src="/WhatsApp Image 2025-11-07 at 01.54.15.jpeg" alt="AgriVerse" class="logo-img" onerror="this.style.display='none'">
+        <span class="brand-text"></span>
+      </a>
+
+      <ul class="navbar-nav" id="navList">
+        <li><a href="/index.html" class="nav-link">About</a></li>
+        <li><a href="/index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="/index.html#perspectives" class="nav-link">Perspectives</a></li>
+        <li><a href="/index.html#contact" class="nav-link">Contact</a></li>
+        <li><a href="/login-page.html" class="nav-btn">Login / Sign Up</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE WRAPPER -->
+  <div class="page-wrapper">
+    <div class="container" role="main" aria-labelledby="verifyTitle">
+      <div class="container-inner">
+        <h2 id="verifyTitle">Complete Investor Verification</h2>
+        <p class="subtitle">Your account is created. Please upload the verification documents below.</p>
+
+        <form id="verifyForm" enctype="multipart/form-data">
+
+          <h3>1. Proof of Citizenship</h3>
+          <label for="citizen_type">Select Document Type *</label>
+          <select id="citizen_type" required>
+            <option value="">Select document</option>
+            <option value="aadhaar">Aadhaar Card</option>
+            <option value="pan">PAN Card</option>
+            <option value="passport">Passport</option>
+            <option value="voter">Voter ID</option>
+          </select>
+
+          <label for="citizen_proof">Upload Document *</label>
+          <input type="file" id="citizen_proof" accept="image/*,application/pdf" required>
+
+          <h3>2. Bank Verification</h3>
+          <label for="bank_proof">Upload Cancelled Cheque / Passbook *</label>
+          <input type="file" id="bank_proof" accept="image/*,application/pdf" required>
+
+          <button type="submit" class="btn">Submit Verification</button>
+          <p id="msg"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIXED RIGHT IMAGE -->
+  <div class="right-hero" aria-hidden="true">
+    <img src="WhatsApp Image 2025-11-07 at 21.35.30.jpeg" alt="AgriVerse Investor Verification">
+  </div>
+
+  <script src="js/verify-investor.js"></script>
+
+  <script>
+    // Navbar shrink on scroll
+    window.addEventListener('scroll', function(){
+      const nav = document.getElementById('mainNav');
+      if(window.scrollY > 30) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    });
+  </script>
+</body>
+</html>
