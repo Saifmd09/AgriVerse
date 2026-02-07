@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgriSage — Smart Agriculture Assistant</title>
+
+<style>
+:root{
+  --green:#2e8b57;
+  --green-light:#e9f7ef;
+  --bg:#f6fff8;
+  --card:#ffffff;
+  --text:#2c3e50;
+  --muted:#7f8c8d;
+}
+
+/* RESET */
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  height:100%;
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+  background:var(--bg);
+}
+
+/* GOOGLE TRANSLATE */
+#google_translate_element{
+  position:fixed;
+  top:12px;
+  left:12px;
+  z-index:9999;
+}
+
+/* MAIN LAYOUT */
+.app{
+  display:grid;
+  grid-template-columns:380px 1fr;
+  height:100vh;
+  max-width:1400px;
+  margin:auto;
+}
+
+/* LEFT PANEL */
+.sidebar{
+  background:var(--card);
+  padding:20px;
+  border-right:1px solid #ddd;
+  overflow-y:auto;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo{
+  background:var(--green);
+  color:white;
+  width:48px;
+  height:48px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+}
+.brand h1{
+  font-size:18px;
+  margin:0;
+  color:var(--green);
+}
+.brand p{
+  margin:4px 0 0;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* PREDICTION CARD */
+.card{
+  margin-top:20px;
+  background:var(--green-light);
+  padding:14px;
+  border-radius:12px;
+}
+.card h3{
+  margin:0 0 10px;
+  color:var(--green);
+  font-size:15px;
+}
+select,input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  margin-bottom:10px;
+}
+button{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+.btn-green{
+  background:var(--green);
+  color:white;
+}
+.btn-green:hover{opacity:0.9}
+
+/* CHAT AREA */
+.chat{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+.messages{
+  flex:1;
+  padding:20px;
+  overflow-y:auto;
+}
+.msg{
+  max-width:70%;
+  padding:12px 14px;
+  border-radius:14px;
+  margin-bottom:12px;
+  line-height:1.4;
+  position:relative;
+}
+.user{
+  background:var(--green);
+  color:white;
+  margin-left:auto;
+}
+.bot{
+  background:white;
+  border:1px solid #ddd;
+}
+
+/* READ ALOUD BUTTON */
+.read-btn{
+  position:absolute;
+  bottom:6px;
+  right:8px;
+  font-size:14px;
+  background:#ecf0f1;
+  border:none;
+  border-radius:50%;
+  padding:4px 6px;
+  cursor:pointer;
+}
+.read-btn:hover{background:#dfe6e9}
+
+/* INPUT BAR */
+.input-bar{
+  display:flex;
+  gap:8px;
+  padding:12px;
+  background:white;
+  border-top:1px solid #ddd;
+  position:sticky;
+  bottom:0;
+}
+.input-bar input{
+  flex:1;
+}
+.voice{
+  background:#ecf0f1;
+  font-size:18px;
+}
+.voice:hover{background:#dfe6e9}
+
+/* MOBILE */
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .sidebar{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- GOOGLE TRANSLATE -->
+<div id="google_translate_element"></div>
+
+<div class="app">
+
+  <!-- LEFT PANEL -->
+  <div class="sidebar">
+    <div class="brand">
+      <div class="logo">AG</div>
+      <div>
+        <h1>AgriSage</h1>
+        <p>Smart Agriculture Assistant</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Prediction Demo</h3>
+      <select id="task">
+        <option value="yield">Yield</option>
+        <option value="pest_risk">Pest Risk</option>
+        <option value="fertilizer_need">Fertilizer Need</option>
+        <option value="rainfall_risk">Rainfall Risk</option>
+      </select>
+      <input id="value" placeholder="Enter value">
+      <button class="btn-green" onclick="predict()">Run Prediction</button>
+      <div id="predResult" style="margin-top:8px;font-weight:600;"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="chat">
+    <div class="messages" id="messages">
+      <div class="msg bot">Hello 👋 I am AgriSage. Howdy?</div>
+    </div>
+
+    <div class="input-bar">
+      <input id="text" placeholder="Type or use voice...">
+      <button class="voice" onclick="startVoice()">🎤</button>
+      <button class="btn-green" onclick="send()">Send</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ---------------- SPEECH TO TEXT ----------------
+let rec;
+if ('webkitSpeechRecognition' in window){
+  rec=new webkitSpeechRecognition();
+  rec.lang='en-IN';
+  rec.onresult=e=>{
+    document.getElementById("text").value=e.results[0][0].transcript;
+  }
+}
+function startVoice(){ if(rec) rec.start(); }
+
+// ---------------- TEXT TO SPEECH ----------------
+function readAloud(text){
+  speechSynthesis.cancel(); // stop previous
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=document.documentElement.lang || 'en-IN';
+  speechSynthesis.speak(u);
+}
+
+// ---------------- CHAT ----------------
+function addMsg(text,cls){
+  const d=document.createElement("div");
+  d.className="msg "+cls;
+  d.innerText=text;
+
+  // Add read aloud button only for bot messages
+  if(cls==="bot"){
+    const b=document.createElement("button");
+    b.className="read-btn";
+    b.innerText="🔊";
+    b.onclick=()=>readAloud(text);
+    d.appendChild(b);
+  }
+
+  messages.appendChild(d);
+  messages.scrollTop=messages.scrollHeight;
+}
+
+async function send(){
+  const q=text.value.trim();
+  if(!q)return;
+  addMsg(q,"user");
+  text.value="";
+  const r=await fetch("/api/ask",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({question:q})
+  });
+  const j=await r.json();
+  addMsg(j.answer,"bot");
+}
+
+// ---------------- PREDICT ----------------
+async function predict(){
+  const t=task.value;
+  const v=value.value;
+  const r=await fetch("/api/predict",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      task:t,
+      features:{
+        rainfall_mm:v,
+        humidity:v,
+        nitrogen_deficit_kg:v,
+        recent_7days_mm:v
+      }
+    })
+  });
+  const j=await r.json();
+  predResult.innerText=JSON.stringify(j.result);
+}
+</script>
+
+<!-- GOOGLE TRANSLATE -->
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:'en'},'google_translate_element');
+}
+</script>
+
+</body>
+</html>
